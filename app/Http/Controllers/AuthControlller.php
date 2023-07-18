@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
 
 class AuthControlller extends Controller
 {   
@@ -54,6 +55,15 @@ class AuthControlller extends Controller
 
        return response($res, 201);
     }
+
+    public function logout(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'Bye'
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
