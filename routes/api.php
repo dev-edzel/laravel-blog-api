@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthControlller;
+use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,15 +27,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthControlller::class, 'logout']);
 
-    //CRUD
-    Route::get('/tasks', [TaskController::class, 'index']);
-    Route::get('/tasks/{task}', [TaskController::class, 'show']);
-    Route::post('/tasks', [TaskController::class, 'store']);
-    Route::put('/tasks/{task}', [TaskController::class, 'update']);
-    Route::delete('/tasks/{task}', [TaskController::class, 'delete']);   
+    // CRUD - TMS
+    // Route::get('/tasks', [TaskController::class, 'index']);
+    // Route::get('/tasks/{task}', [TaskController::class, 'show']);
+    // Route::post('/tasks', [TaskController::class, 'store']);
+    // Route::put('/tasks/{task}', [TaskController::class, 'update']);
+    // Route::delete('/tasks/{task}', [TaskController::class, 'delete']);   
  
     });
 
 Route::post('/signup', [AuthControlller::class, 'sign_up']);
 Route::post('/login', [AuthControlller::class, 'login']);
+Route::get('/user', [AuthControlller::class, 'index']);
 

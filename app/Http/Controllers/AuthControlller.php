@@ -32,6 +32,15 @@ class AuthControlller extends Controller
         return response($res, 201);
     }
 
+    public function index()
+    {
+        $users = User::all();
+
+        return response()->json([
+            'user' => $users
+        ]); 
+    }
+
     public function login(Request $request){
        $data = $request->validate([
             'email' => 'required|string',
@@ -66,11 +75,7 @@ class AuthControlller extends Controller
 
     /**
      * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+     *
 
     /**
      * Show the form for creating a new resource.
