@@ -17,7 +17,6 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'user_id' => 'required|exists:users,id',
         ]);
 
         $post = Post::create($validatedData);
@@ -34,7 +33,6 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'sometimes|required|string|max:255',
             'content' => 'sometimes|required|string',
-            'user_id' => 'sometimes|required|exists:users,id',
         ]);
 
         $post->update($validatedData);
