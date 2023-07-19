@@ -40,3 +40,5 @@ Route::post('/signup', [AuthControlller::class, 'sign_up']);
 Route::post('/login', [AuthControlller::class, 'login']);
 Route::get('/user', [AuthControlller::class, 'index']);
 
+//BLOG CRUD
+Route::resource('posts', PostController::class)->except(['create', 'edit']);
