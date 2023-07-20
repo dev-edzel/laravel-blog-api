@@ -60,3 +60,4 @@ public function destroy($id)
     return response()->json(null, 204);
 }
 }
+
