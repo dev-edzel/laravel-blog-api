@@ -9,39 +9,60 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Post::all();
+        $posts = Post::all();
+        return response()->json($posts);
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string',
             'content' => 'required|string',
+            'author' => 'required|string',
         ]);
 
         $post = Post::create($validatedData);
         return response()->json($post, 201);
     }
 
-    public function show(Post $post)
+    public function show($id)
     {
-        return $post;
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json(['error' => 'Invalid'], 404);
+        }
+
+        return response()->json($post);
     }
 
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json(['error' => 'Invalid'], 404);
+        }
+
         $validatedData = $request->validate([
-            'title' => 'sometimes|required|string|max:255',
-            'content' => 'sometimes|required|string',
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'author' => 'required|string',
         ]);
 
         $post->update($validatedData);
-        return response()->json($post, 200);
+        return response()->json($post);
     }
 
-    public function destroy(Post $post)
+    public function destroy($id)
     {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response()->json(['error' => 'Invalid'], 404);
+        }
+
         $post->delete();
-        return response()->json(null, 204);
+        return response()->json($post);
     }
 }

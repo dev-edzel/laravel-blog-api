@@ -28,8 +28,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthControlller::class, 'logout']);
 
-    //BLOG CRUD
-Route::resource('posts', PostController::class)->except(['create', 'edit']);
+//BLOG CRUD
+Route::get('/posts', [PostController::class, 'index']);
+Route::post('/posts', [PostController::class, 'store']);
+Route::get('/posts/{id}', [PostController::class, 'show']);
+Route::put('/posts/{id}', [PostController::class, 'update']);
+Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
     // CRUD - TMS
     // Route::get('/tasks', [TaskController::class, 'index']);
     // Route::get('/tasks/{task}', [TaskController::class, 'show']);
@@ -37,9 +42,14 @@ Route::resource('posts', PostController::class)->except(['create', 'edit']);
     // Route::put('/tasks/{task}', [TaskController::class, 'update']);
     // Route::delete('/tasks/{task}', [TaskController::class, 'delete']);   
  
-    });
+});
 
+//USER MANAGEMENT
 Route::post('/signup', [AuthControlller::class, 'sign_up']);
 Route::post('/login', [AuthControlller::class, 'login']);
 Route::get('/user', [AuthControlller::class, 'index']);
+Route::delete('/user/{id}', [AuthControlller::class, 'deleteAccount']);
+
+//ADMIN | ROLES
+
 

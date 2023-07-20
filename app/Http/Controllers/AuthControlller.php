@@ -67,61 +67,20 @@ class AuthControlller extends Controller
 
     public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
-        return [
-            'message' => 'Bye'
-        ];
+        $request->user()->tokens()->delete();
+
+        return response()->json(['message' => 'Logged out']);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
+    public function deleteAccount($id) {
+        $user = User::find($id);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        if (!$user) {
+            return response()->json(['error' => 'Invalid'], 404);
+        }
+
+        $user->delete();
+        return response()->json(['message' => 'Account deleted succesfully']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
