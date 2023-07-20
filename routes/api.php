@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthControlller;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,4 +53,11 @@ Route::delete('/user/{id}', [AuthControlller::class, 'deleteAccount']);
 
 //ADMIN | ROLES
 
+//Comments
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/post/{id}/comments', [CommentController::class, 'store']);
+    Route::get('/post/{id}/comments', [CommentController::class, 'index']);
+    Route::put('/comments/{id}', [CommentController::class, 'update']);
+    Route::delete('/comments/{id}', [CommentController::class, 'destroy']);
 
+});
