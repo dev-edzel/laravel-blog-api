@@ -1,66 +1,56 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel Backend Challenge: Blogging API
 
-## About Laravel
+Your challenge is to create a RESTful API for a blogging platform using Laravel. This platform should include common features such as user registration, authentication, creating blog posts, comments, and more.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Setup:
+Install a fresh Laravel instance.
+Setup a database of your choice (MySQL, SQLite, etc.).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. User Management:
+Use Laravel's built-in authentication to manage user registration and login.
+Endpoints:
+Register (POST /api/register)
+Login (POST /api/login)
+Logout (POST /api/logout)
+User Info (GET /api/user)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. Blog Posts:
+A blog post should have: title, content, author (user), and timestamps.
+Endpoints:
+Create a blog post (POST /api/posts)
+Retrieve all blog posts (GET /api/posts)
+Retrieve a single blog post (GET /api/posts/{id})
+Update a blog post (PUT /api/posts/{id})
+Delete a blog post (DELETE /api/posts/{id})
 
-## Learning Laravel
+4. Comments:
+A comment should be related to a blog post and should have: content, author (user), and timestamps.
+Endpoints:
+Add a comment to a post (POST /api/posts/{id}/comments)
+Retrieve all comments for a post (GET /api/posts/{id}/comments)
+Update a comment (PUT /api/comments/{id})
+Delete a comment (DELETE /api/comments/{id})
+                                                                                                                                                
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+5. Middleware & Authorization:
+Only authenticated users can create, update, or delete blog posts and comments.
+Users can only update or delete their own blog posts and comments.
+Use Laravel's middleware to enforce these rules.
+6. Pagination & Filtering:
+Implement pagination for the blog posts and comments endpoints.
+Allow filtering blog posts by author or date.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+7. Error Handling:
+Ensure that the API gracefully handles common errors (e.g., 404 Not Found, 401 Unauthorized) and provides clear error messages to the client.
 
-### Premium Partners
+8. Testing:
+Use Laravel's built-in testing tools to write unit and feature tests for your API. Ensure all the endpoints and edge cases are covered.
+Bonus:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Implement an endpoint that returns the top N users who have the most blog posts.
+Add a tagging system where each blog post can have multiple tags, and users can filter blog posts by tags.
