@@ -8,5 +8,12 @@ use Illuminate\Notifications\Notifiable;
 
 class Comment extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+
+    protected $fillable = ['content', 'author', 'post_id'];
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }

@@ -5,57 +5,69 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
     public function store(Request $request, $postId)
     {
         $post = Post::find($postId);
-        if(!$post) {
-            return response()->json(['error' => 'Post not found'], 404);
+
+        if (!$post) {
+            return response()->json(['error' => 'Post Not Found'], 404);
         }
 
-        $comment = new Comment();
-        $comment->content = $request->input('content');
-        $comment->user_id = auth()->id();
-        $post->comments()->save($comment);
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+        ]);
 
-        return response()->json($comment);
+        $validatedData['author'] = Auth::user()->name;
+        $validatedData['post_id'] = $postId;
+
+        $comment = Comment::create($validatedData);
+
+        return response()->json($comment, 201);
     }
 
-    public function show($postId)
+    public function index($postId)
     {
         $post = Post::find($postId);
-        if(!$post) {
-            return response()->json(['error' => 'Invalid'], 404);
+
+        if (!$post) {
+            return response()->json(['error' => 'Post Not Found'], 404);
         }
 
-        return response()->json($post->comments);
+        $comments = $post->comments;
+        return response()->json($comments);
     }
 
     public function update(Request $request, $id)
     {
         $comment = Comment::find($id);
-        if(!$comment || $comment->user_id !== auth()->id()) {
-            return response()->json(['error' => 'Invalid mamsh'], 403);
+
+        if (!$comment) {
+            return response()->json(['error' => 'Comment Not Found'], 404);
         }
 
-        $comment->content = $request->input('content');
-        $comment->save();
+        $validatedData = $request->validate([
+            'content' => 'required|string',
+        ]);
 
+        $validatedData['author'] = Auth::user()->name;
+
+        $comment->update($validatedData);
         return response()->json($comment);
     }
 
     public function destroy($id)
     {
         $comment = Comment::find($id);
-        if(!$comment || $comment->user_id !== auth()->id()) {
-            return response()->json(['error' => 'Invalid mamsh'], 403);
+
+        if (!$comment) {
+            return response()->json(['error' => 'Comment Not Found'], 404);
         }
 
         $comment->delete();
-
-        return response()->json(['message' => 'Comment deleted']);
+        return response()->json($comment);
     }
 }
-

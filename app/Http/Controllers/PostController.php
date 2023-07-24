@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\AuthControlller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -18,8 +19,10 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'author' => 'required|string',
+            // 'author' => 'required|string',
         ]);
+
+        $validatedData['author'] = Auth::user()->name;
 
         $post = Post::create($validatedData);
         return response()->json($post, 201);
@@ -30,8 +33,9 @@ class PostController extends Controller
         $post = Post::find($id);
 
         if (!$post) {
-            return response()->json(['error' => 'Invalid'], 404);
+            return response()->json(['error' => 'Not Found'], 404);
         }
+
 
         return response()->json($post);
     }
@@ -47,8 +51,9 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
-            'author' => 'required|string',
         ]);
+
+        $validatedData['author'] = Auth::user()->name;
 
         $post->update($validatedData);
         return response()->json($post);
