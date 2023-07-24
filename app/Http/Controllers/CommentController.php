@@ -27,7 +27,7 @@ class CommentController extends Controller
     {
         $post = Post::find($postId);
         if(!$post) {
-            return response()->json(['error' => 'Post not found'], 404);
+            return response()->json(['error' => 'Invalid'], 404);
         }
 
         return response()->json($post->comments);
@@ -37,7 +37,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id);
         if(!$comment || $comment->user_id !== auth()->id()) {
-            return response()->json(['error' => 'Comment not found or not authorized'], 403);
+            return response()->json(['error' => 'Invalid mamsh'], 403);
         }
 
         $comment->content = $request->input('content');
@@ -50,7 +50,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id);
         if(!$comment || $comment->user_id !== auth()->id()) {
-            return response()->json(['error' => 'Comment not found or not authorized'], 403);
+            return response()->json(['error' => 'Invalid mamsh'], 403);
         }
 
         $comment->delete();
