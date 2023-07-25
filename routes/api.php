@@ -36,12 +36,18 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 
-    // CRUD - TMS
-    // Route::get('/tasks', [TaskController::class, 'index']);
-    // Route::get('/tasks/{task}', [TaskController::class, 'show']);
-    // Route::post('/tasks', [TaskController::class, 'store']);
-    // Route::put('/tasks/{task}', [TaskController::class, 'update']);
-    // Route::delete('/tasks/{task}', [TaskController::class, 'delete']);   
+//Comments
+Route::post('/posts/{id}/comment', [CommentController::class, 'store']);
+Route::get('/posts/{id}/comment', [CommentController::class, 'index']);
+Route::put('/comment/{id}', [CommentController::class, 'update']);
+Route::delete('/comment/{id}', [CommentController::class, 'destroy']);
+    
+// CRUD - TMS
+// Route::get('/tasks', [TaskController::class, 'index']);
+// Route::get('/tasks/{task}', [TaskController::class, 'show']);
+// Route::post('/tasks', [TaskController::class, 'store']);
+// Route::put('/tasks/{task}', [TaskController::class, 'update']);
+// Route::delete('/tasks/{task}', [TaskController::class, 'delete']);   
  
 });
 
@@ -54,11 +60,3 @@ Route::delete('/user/{id}', [AuthControlller::class, 'deleteAccount']);
 //ADMIN | ROLES
 
 
-//Comments
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/post/{id}/comments', [CommentController::class, 'store']);
-    Route::get('/post/{id}/comments', [CommentController::class, 'index']);
-    Route::put('/comments/{id}', [CommentController::class, 'update']);
-    Route::delete('/comments/{id}', [CommentController::class, 'destroy']);
-
-});
