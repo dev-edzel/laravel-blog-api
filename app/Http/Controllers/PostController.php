@@ -5,12 +5,29 @@ use App\Http\Controllers\AuthControlller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::all();
+
+        $perPage = $request->input('per_page', 10);
+        $query = Post::query();
+
+        if ($request->has('author')) {
+            $author = $request->input('author');
+            $query->where('author', $author);
+        }
+
+        if ($request->has('date')) {
+            $date = $request->input('date');
+            $query->whereDate('created_at', $date);
+        }
+    
+        $posts = $query->paginate($perPage);
+
         return response()->json($posts);
     }
 
@@ -70,4 +87,6 @@ class PostController extends Controller
         $post->delete();
         return response()->json($post);
     }
+
+    
 }

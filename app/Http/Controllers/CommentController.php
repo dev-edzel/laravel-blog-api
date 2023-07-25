@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Pagination\Paginator;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -29,16 +30,27 @@ class CommentController extends Controller
         return response()->json($comment, 201);
     }
 
-    public function index($postId)
+    public function index(Request $request, $postId)
     {
         $post = Post::find($postId);
 
         if (!$post) {
             return response()->json(['error' => 'Post Not Found'], 404);
         }
+        
+        $perPage = $request->input('per_page', 10); // Number of comments per page, default is 10
+        $post = Post::find($postId);
+    
+        if (!$post) {
+            return response()->json(['error' => 'Post Not Found'], 404);
+        }
+    
+        $comments = $post->comments()->paginate($perPage);
 
         $comments = $post->comments;
         return response()->json($comments);
+
+        
     }
 
     public function update(Request $request, $id)
